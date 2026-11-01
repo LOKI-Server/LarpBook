@@ -1,0 +1,38 @@
+[package]
+name = "larpbook"
+version = "0.1.0"
+edition = "2024"
+description = "A shared text feed for a LOKI server."
+license = "MIT"
+publish = false
+
+[workspace]
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+loki-sdk = { version = "0.3.0", path = "../LOKI/crates/loki-sdk", features = ["templates"] }
+askama = { version = "0.12", default-features = false }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[dev-dependencies]
+loki-sdk = { version = "0.3.0", path = "../LOKI/crates/loki-sdk", features = ["testing"] }
+# Native tests run the app's SQL against a real in-memory SQLite.
+rusqlite = { version = "0.41", features = ["bundled"] }
+
+[package.metadata.loki]
+id = "larpbook"
+name = "LarpBook"
+description = "A shared feed with likes and replies. Names, bios, and pictures come from LOKI."
+health = "/health"
+roles = ["admin"]
+capabilities = ["database", "forms"]
+assets = ["static"]
+
+[profile.release]
+lto = true
+opt-level = "s"
+strip = true
+panic = "abort"

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block title %}{{ post.author.name }} · {% endblock %}
+{% block content %}
+<p class="crumb"><a href="/">← Feed</a></p>
+{% call m::post(post, chrome, false) %}
+<section class="thread" id="replies" aria-label="Replies">
+  <h2>{% if replies.is_empty() %}No replies yet{% else if replies.len() == 1 %}1 reply{% else %}{{ replies.len() }} replies{% endif %}</h2>
+  {% for reply in replies %}
+  <article class="reply" id="r-{{ reply.id }}">
+    {% call m::byline(reply.author, reply.when) %}
+    <p class="body">{{ reply.html|safe }}</p>
+    {% if reply.can_delete %}
+    <form class="actions" method="post" action="/replies/{{ reply.id }}/delete" data-confirm="Delete this reply?">
+      <input type="hidden" name="csrf_token" value="{{ chrome.csrf }}">
+      <input type="hidden" name="back" value="{{ chrome.here }}">
+      <button class="quiet">Delete</button>
+    </form>
+    {% endif %}
+  </article>
+  {% endfor %}
+  {% call m::composer(chrome, chrome.here.clone() + "/replies", "Reply", "Write a reply", draft, error, "Reply") %}
+</section>
+{% endblock %}

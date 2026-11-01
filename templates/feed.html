@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block content %}
+{% call m::composer(chrome, "/posts", "New post", "What’s happening?", draft, error, "Post") %}
+{% for post in posts %}{% call m::post(post, chrome, true) %}{% endfor %}
+{% if posts.is_empty() %}<p class="empty">Nobody has posted yet. Be the first.</p>{% endif %}
+{% if older != "" %}<p class="more"><a href="{{ older }}">Older posts</a></p>{% endif %}
+{% endblock %}

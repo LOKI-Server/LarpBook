@@ -1,0 +1,231 @@
+:root {
+  color-scheme: light;
+  --ink: #241c16;
+  --muted: #6f6258;
+  --paper: #f4efe6;
+  --card: #fffdf9;
+  --field: #ffffff;
+  --line: #e3d6c6;
+  --accent: #8a3b2c;
+  --accent-ink: #fffaf6;
+  --avatar: #ead8c8;
+  --avatar-ink: #6a3328;
+  --heart: #b8323f;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --ink: #eee5da;
+    --muted: #b0a396;
+    --paper: #1b1714;
+    --card: #25201c;
+    --field: #1f1b18;
+    --line: #3b332c;
+    --accent: #e08a6f;
+    --accent-ink: #1b1714;
+    --avatar: #4a3a30;
+    --avatar-ink: #f1d8c8;
+    --heart: #f0707c;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 18px/1.5 Georgia, "Iowan Old Style", Palatino, serif;
+}
+
+a { color: var(--accent); }
+a:hover { text-decoration-thickness: 2px; }
+
+/* Links to #p-…, #r-… and #replies land below the sticky header. */
+[id] { scroll-margin-top: 4.5rem; }
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 0.4rem;
+}
+
+/* Header */
+.top {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+.bar, main {
+  width: min(40rem, calc(100% - 2rem));
+  margin: 0 auto;
+}
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.6rem 0;
+}
+.brand {
+  color: inherit;
+  font-weight: 700;
+  font-size: 1.15rem;
+  text-decoration: none;
+}
+.who {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  font-size: 0.95rem;
+}
+.who form { margin: 0; }
+
+main { padding: 1.25rem 0 4rem; }
+
+/* People */
+.person {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: inherit;
+  text-decoration: none;
+  min-width: 0;
+}
+.person:hover .name { text-decoration: underline; }
+.meta { min-width: 0; overflow-wrap: anywhere; }
+.name { font-weight: 700; }
+.username, time, .empty, .help, .count, .crumb a { color: var(--muted); }
+.username, time { font-size: 0.9rem; }
+
+.avatar {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--avatar);
+  color: var(--avatar-ink);
+  font-weight: 700;
+  overflow: hidden;
+  flex: none;
+}
+.avatar.small { width: 2rem; height: 2rem; font-size: 0.85rem; }
+.avatar.large { width: 5rem; height: 5rem; font-size: 1.8rem; }
+.avatar img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Cards */
+.post, .reply, .composer, .profile {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  padding: 0.9rem 1.1rem;
+  margin: 0 0 0.9rem;
+}
+.post:target, .reply:target { border-color: var(--accent); }
+
+.byline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+time { flex: none; white-space: nowrap; }
+
+.body, .bio {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  margin: 0.6rem 0 0;
+}
+.bio { color: var(--muted); }
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0.5rem 0 0;
+}
+.actions form { margin: 0; }
+.actions form:last-child:not(:first-child) { margin-left: auto; }
+.replies { font-size: 0.95rem; }
+
+/* Forms */
+label { display: block; font-weight: 700; margin-bottom: 0.35rem; }
+textarea {
+  display: block;
+  width: 100%;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 0.7rem;
+  background: var(--field);
+  color: inherit;
+  font: inherit;
+  resize: vertical;
+}
+textarea[aria-invalid="true"] { border-color: var(--heart); }
+.send {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 0.6rem;
+}
+.count { font-size: 0.85rem; font-variant-numeric: tabular-nums; }
+.count.over { color: var(--heart); font-weight: 700; }
+.error { color: var(--heart); margin: 0.5rem 0 0; }
+
+button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.45rem 1rem;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font: 0.95rem/1.2 Georgia, serif;
+  cursor: pointer;
+}
+button.quiet, button.like {
+  background: transparent;
+  color: var(--muted);
+  padding-inline: 0.4rem;
+}
+button.quiet:hover { color: var(--heart); }
+button.like { font-size: 0.95rem; }
+button.like span { font-size: 1.1rem; }
+button.like:hover, button.like.liked { color: var(--heart); }
+
+/* Pages */
+.profile {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+.profile h1 { margin: 0; font-size: 1.4rem; line-height: 1.2; }
+.profile .username { margin: 0.2rem 0 0; }
+.help { font-size: 0.9rem; margin: 0.6rem 0 0; }
+
+.crumb { margin: 0 0 0.75rem; }
+.thread h2 { font-size: 1rem; color: var(--muted); margin: 1.25rem 0 0.75rem; }
+.reply { margin-left: 1.25rem; }
+.reply .actions { justify-content: flex-end; }
+
+.empty { text-align: center; margin: 2rem 0; }
+.more { text-align: center; }
+
+@media (max-width: 34rem) {
+  body { font-size: 17px; }
+  .who .name { display: none; }
+  .reply { margin-left: 0.5rem; }
+  .byline { align-items: flex-start; }
+}

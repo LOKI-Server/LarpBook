@@ -1,0 +1,47 @@
+{% macro avatar(person, size) %}
+<span class="avatar {{ size }}" aria-hidden="true"><span>{{ person.initial }}</span>{% if person.avatar != "" %}<img src="{{ person.avatar }}" alt="" decoding="async" loading="lazy">{% endif %}</span>
+{% endmacro %}
+
+{% macro byline(person, when) %}
+<div class="byline">
+  <a class="person" href="/u/{{ person.id }}">
+    {% call avatar(person, "") %}
+    <span class="meta"><span class="name">{{ person.name }}</span> <span class="username">@{{ person.username }}</span></span>
+  </a>
+  <time datetime="{{ when.iso }}" title="{{ when.label }}">{{ when.label }}</time>
+</div>
+{% endmacro %}
+
+{% macro post(card, chrome, linked) %}
+<article class="post" id="p-{{ card.id }}">
+  {% call byline(card.author, card.when) %}
+  <p class="body">{{ card.html|safe }}</p>
+  <div class="actions">
+    <form method="post" action="/p/{{ card.id }}/like">
+      <input type="hidden" name="csrf_token" value="{{ chrome.csrf }}">
+      <input type="hidden" name="back" value="{{ chrome.here }}">
+      <button class="like{% if card.liked %} liked{% endif %}" aria-pressed="{{ card.liked }}" title="{% if card.liked %}Unlike{% else %}Like{% endif %}"><span aria-hidden="true">{% if card.liked %}♥{% else %}♡{% endif %}</span> {{ card.likes }}</button>
+    </form>
+    {% if linked %}
+    <a class="replies" href="/p/{{ card.id }}#replies">{% if card.replies == 0 %}Reply{% else if card.replies == 1 %}1 reply{% else %}{{ card.replies }} replies{% endif %}</a>
+    {% endif %}
+    {% if card.can_delete %}
+    <form method="post" action="/p/{{ card.id }}/delete" data-confirm="Delete this post and its replies?">
+      <input type="hidden" name="csrf_token" value="{{ chrome.csrf }}">
+      <input type="hidden" name="back" value="{{ chrome.here }}">
+      <button class="quiet">Delete</button>
+    </form>
+    {% endif %}
+  </div>
+</article>
+{% endmacro %}
+
+{% macro composer(chrome, action, label, placeholder, draft, error, button) %}
+<form class="composer" method="post" action="{{ action }}">
+  <input type="hidden" name="csrf_token" value="{{ chrome.csrf }}">
+  <label for="body">{{ label }}</label>
+  <textarea id="body" name="body" rows="3" maxlength="2000" placeholder="{{ placeholder }}" required{% if error != "" %} aria-invalid="true" aria-describedby="body-error"{% endif %}>{{ draft }}</textarea>
+  {% if error != "" %}<p class="error" id="body-error">{{ error }}</p>{% endif %}
+  <div class="send"><output class="count" for="body" aria-live="polite"></output><button>{{ button }}</button></div>
+</form>
+{% endmacro %}

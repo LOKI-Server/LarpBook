@@ -1,0 +1,30 @@
+{% import "macros.html" as m -%}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>{% block title %}{% endblock %}LarpBook</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+<header class="top">
+  <div class="bar">
+    <a class="brand" href="/">LarpBook</a>
+    <nav class="who" aria-label="Account">
+      <a class="person" href="/u/{{ chrome.viewer.id }}" title="Your posts">
+        {% call m::avatar(chrome.viewer, "small") %}
+        <span class="name">{{ chrome.viewer.name }}</span>
+      </a>
+      <a href="{{ chrome.account_url }}" title="Change your name, bio or picture on LOKI">Profile</a>
+      <form method="post" action="/logout"><input type="hidden" name="csrf_token" value="{{ chrome.csrf }}"><button class="quiet">Sign out</button></form>
+    </nav>
+  </div>
+</header>
+<main>
+{% block content %}{% endblock %}
+</main>
+</body>
+</html>

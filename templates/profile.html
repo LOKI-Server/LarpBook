@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block title %}{{ subject.name }} · {% endblock %}
+{% block content %}
+<section class="profile">
+  {% call m::avatar(subject, "large") %}
+  <div>
+    <h1>{{ subject.name }}</h1>
+    <p class="username">@{{ subject.username }} · {% if post_count == 1 %}1 post{% else %}{{ post_count }} posts{% endif %}</p>
+    {% if subject.bio != "" %}<p class="bio">{{ subject.bio }}</p>{% endif %}
+    {% if subject.id == chrome.viewer.id %}<p class="help">Your name, bio and picture come from LOKI. <a href="{{ chrome.account_url }}">Change them there.</a></p>{% endif %}
+  </div>
+</section>
+{% for post in posts %}{% call m::post(post, chrome, true) %}{% endfor %}
+{% if posts.is_empty() %}<p class="empty">No posts yet.</p>{% endif %}
+{% if older != "" %}<p class="more"><a href="{{ older }}">Older posts</a></p>{% endif %}
+{% endblock %}
