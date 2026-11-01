@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2024"
 description = "A shared text feed for a LOKI server."
 license = "MIT"
+repository = "https://github.com/LOKI-Server/LarpBook"
 publish = false
 
 [workspace]

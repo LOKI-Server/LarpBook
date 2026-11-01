@@ -1,6 +1,6 @@
 # LarpBook
 
-A shared feed for the people on a [LOKI](https://github.com/Aspenini/LOKI) server. LarpBook keeps no accounts of its own: names, usernames, bios and profile pictures come from LOKI.
+A shared feed for the people on a [LOKI](https://github.com/LOKI-Server/LOKI) server. LarpBook keeps no accounts of its own: names, usernames, bios and profile pictures come from LOKI.
 
 - **Post** plain text, up to 2,000 characters. Web links become clickable; nothing else in a post is markup.
 - **Like** a post, or take the like back.
