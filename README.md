@@ -12,7 +12,7 @@ Times show in each reader's own time zone, the composer counts down near the lim
 
 ## Requirements
 
-LarpBook needs LOKI 0.3 or later and is built with `loki-sdk` 0.3. `Cargo.toml` points at a sibling LOKI checkout (`../LOKI`) until that SDK release is on crates.io.
+LarpBook runs on LOKI 0.3 or later.
 
 Give people access to the app in LOKI. To let someone moderate, grant them the app's `admin` role; LOKI's owner has it already.
 
@@ -22,12 +22,12 @@ Install Rust, then from this directory:
 
 ```powershell
 rustup target add wasm32-wasip2
-cargo install --path ..\LOKI\crates\cargo-loki --locked
+cargo install cargo-loki --locked
 cargo test
-cargo loki dev --server ..\LOKI\target\debug\loki-server.exe
+cargo loki dev --server PATH_TO_LOKI_SERVER
 ```
 
-`cargo loki dev` runs a separate local LOKI and prints a sign-in for it. It does not touch an existing LOKI server.
+`cargo loki dev` needs a `loki-server` executable, from a LOKI release or your own build. It runs a separate local LOKI and prints a sign-in for it, without touching an existing LOKI server.
 
 `cargo loki package` writes `target/loki/larpbook-0.1.0.loki-app`. Import it in LOKI, grant access, and enable it.
 

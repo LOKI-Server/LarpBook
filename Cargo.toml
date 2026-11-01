@@ -13,13 +13,13 @@ publish = false
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-loki-sdk = { version = "0.3.0", path = "../LOKI/crates/loki-sdk", features = ["templates"] }
+loki-sdk = { version = "0.3", features = ["templates"] }
 askama = { version = "0.12", default-features = false }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 
 [dev-dependencies]
-loki-sdk = { version = "0.3.0", path = "../LOKI/crates/loki-sdk", features = ["testing"] }
+loki-sdk = { version = "0.3", features = ["testing"] }
 # Native tests run the app's SQL against a real in-memory SQLite.
 rusqlite = { version = "0.41", features = ["bundled"] }
 
